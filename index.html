@@ -69,15 +69,21 @@ p{margin:0}
 .count{font-size:.85rem;font-weight:800;color:var(--muted);margin-right:6px}
 .link-btn{font:inherit;font-weight:800;font-size:.9rem;background:none;border:0;color:var(--fg);text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:6px 8px;min-height:36px;border-radius:8px}
 
-.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(138px,1fr));gap:10px}
-.cat{display:flex;align-items:center;gap:8px;padding:10px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--fg);
-  font:inherit;font-weight:800;text-align:left;cursor:pointer;min-height:62px;transition:transform .08s,background .15s,border-color .15s,color .15s}
-.cat .ic{font-size:1.4rem;line-height:1;flex:none;width:1.3em;text-align:center}
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.cat{--c:#888;position:relative;display:flex;align-items:center;gap:9px;padding:10px;border-radius:14px;border:2px solid var(--line);background:var(--surface);color:var(--fg);
+  font:inherit;font-weight:800;text-align:left;cursor:pointer;min-height:68px;transition:transform .08s,background .15s,border-color .15s,color .15s,box-shadow .15s}
+.badge-wrap{position:relative;flex:none;width:40px;height:40px}
+.cat .badge{width:40px;height:40px;border-radius:50%;background:var(--c);color:#fff;display:grid;place-items:center;box-shadow:0 2px 6px color-mix(in srgb,var(--c) 45%,transparent)}
+.cat .badge svg{width:23px;height:23px;display:block}
+.cat .tick{position:absolute;right:-5px;bottom:-5px;width:18px;height:18px;border-radius:50%;background:#fff;color:var(--c);display:none;place-items:center;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.cat .tick svg{width:11px;height:11px;display:block}
 .cat .tx{min-width:0}
-.cat .nm{display:block;font-size:.9rem;line-height:1.15;overflow-wrap:anywhere}
-.cat .ct{display:block;font-size:.73rem;color:var(--muted);font-weight:700;margin-top:2px}
-.cat[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
-.cat[aria-pressed="true"] .ct{color:var(--accent)}
+.cat .nm{display:block;font-size:.88rem;line-height:1.15;overflow-wrap:anywhere}
+.cat .ct{display:block;font-size:.72rem;color:var(--muted);font-weight:700;margin-top:2px}
+.cat[aria-pressed="true"]{color:#fff;border-color:transparent;background:var(--c);background:linear-gradient(135deg,var(--c),color-mix(in srgb,var(--c) 70%,#000));box-shadow:0 6px 16px color-mix(in srgb,var(--c) 35%,transparent)}
+.cat[aria-pressed="true"] .badge{background:rgba(255,255,255,.22);box-shadow:none}
+.cat[aria-pressed="true"] .ct{color:rgba(255,255,255,.8)}
+.cat[aria-pressed="true"] .tick{display:grid}
 .cat:active{transform:scale(.97)}
 
 .seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:4px;background:var(--surface-2);padding:4px;border-radius:12px}
@@ -141,6 +147,25 @@ p{margin:0}
 .btn-got{background:var(--got);color:var(--got-ink);min-height:92px;font-size:1.7rem}
 .key-hint{text-align:center;font-size:.75rem;opacity:.55;font-weight:700}
 @media (hover:none){.key-hint{display:none}}
+
+.cat-pill{--c:#888;display:inline-flex;align-items:center;gap:8px;padding:6px 14px 6px 8px;border-radius:999px;background:var(--c);color:#fff;font-weight:800;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase}
+.cat-pill-icon{display:inline-grid;place-items:center;width:22px;height:22px}
+.cat-pill-icon svg{width:20px;height:20px;display:block}
+.tilt-hint{font-size:.78rem;font-weight:800;opacity:.6;letter-spacing:.04em;margin-top:6px}
+.stage-note-small{font-size:.9rem;opacity:.65}
+.flash{position:fixed;inset:0;z-index:50;display:grid;place-items:center;pointer-events:none;opacity:0;transition:opacity .12s;font-family:var(--font-display);font-size:clamp(3rem,18vw,7rem);color:#fff;text-shadow:0 4px 20px rgba(0,0,0,.3);letter-spacing:.02em}
+.flash.show{opacity:1}
+.flash.got{background:var(--got)}
+.flash.skip{background:var(--skip)}
+.switch{position:relative;display:flex;align-items:center;gap:12px;cursor:pointer}
+.switch input{position:absolute;opacity:0;width:0;height:0}
+.switch .track{flex:none;width:46px;height:28px;border-radius:999px;background:var(--line);position:relative;transition:background .15s}
+.switch .track::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .15s}
+.switch input:checked+.track{background:var(--got)}
+.switch input:checked+.track::after{transform:translateX(18px)}
+.switch input:focus-visible+.track{outline:3px solid var(--accent);outline-offset:2px}
+.switch-text{display:flex;flex-direction:column;gap:2px;min-width:0}
+.switch-text small{color:var(--muted);font-weight:700;font-size:.82rem}
 
 /* round + final */
 .round-pts{display:flex;align-items:baseline;gap:10px;font-weight:800;font-size:1.05rem;color:var(--muted)}
@@ -207,6 +232,15 @@ p{margin:0}
         <p class="hint" id="team-hint">Teams take turns. One point per word guessed.</p>
       </div>
 
+      <div class="panel">
+        <h2>Controls</h2>
+        <label class="switch" for="opt-tilt">
+          <input type="checkbox" id="opt-tilt" checked>
+          <span class="track" aria-hidden="true"></span>
+          <span class="switch-text"><strong>Tilt the phone to answer</strong><small>Tip it face-down for Got it, face-up to skip. The buttons always work too.</small></span>
+        </label>
+      </div>
+
       <details class="rules">
         <summary>House rules</summary>
         <ul>
@@ -228,6 +262,7 @@ p{margin:0}
       <p class="eyebrow" id="handoff-round">Round 1</p>
       <h2 class="huge" id="handoff-team">Red Team</h2>
       <p class="stage-note">Hand the phone to your actor. Only they should see the screen.</p>
+      <p class="stage-note stage-note-small" id="handoff-tip" hidden>Tilt the phone down for Got it, up to skip. Or use the buttons.</p>
       <p class="stage-score" id="handoff-score"></p>
       <button type="button" class="btn btn-accent btn-big" id="btn-ready">I'm the actor. Show me!</button>
       <button type="button" class="link-btn" id="btn-quit-handoff">Back to setup</button>
@@ -240,6 +275,7 @@ p{margin:0}
         <span id="play-team">Red Team</span>
         <span class="play-score" id="play-score">0 pts</span>
         <span class="tools">
+          <button type="button" class="chip-btn" id="btn-tilt" aria-pressed="false">Tilt on</button>
           <button type="button" class="chip-btn" id="btn-mute" aria-pressed="false">Sound on</button>
           <button type="button" class="chip-btn" id="btn-early">End round</button>
         </span>
@@ -248,14 +284,16 @@ p{margin:0}
       <div class="bar"><div class="bar-fill" id="bar-fill" style="width:100%"></div></div>
     </div>
     <div class="play-mid">
-      <p class="eyebrow" id="play-cat">Animals</p>
+      <span class="cat-pill" id="play-cat"><span class="cat-pill-icon" id="play-cat-icon"></span><span id="play-cat-name">Animals</span></span>
       <p class="word" id="play-word">Kangaroo</p>
+      <p class="tilt-hint" id="tilt-hint" hidden>Tilt down = Got it &nbsp;&middot;&nbsp; Tilt up = Skip</p>
     </div>
     <div class="play-actions">
       <button type="button" class="btn btn-skip" id="btn-skip">Skip</button>
       <button type="button" class="btn btn-got" id="btn-got">Got it!</button>
     </div>
     <p class="key-hint">Keyboard: Space or → for Got it, Backspace or ← to skip</p>
+    <div class="flash" id="flash" aria-hidden="true"><span id="flash-text">GOT IT!</span></div>
   </section>
 
   <section class="screen" id="screen-round" hidden>
@@ -298,22 +336,44 @@ p{margin:0}
 'use strict';
 
 var CATEGORIES=[
- {id:'animals',name:'Animals',icon:'🐘',words:["Dog","Cat","Elephant","Lion","Monkey","Snake","Kangaroo","Penguin","Giraffe","Frog","Chicken","Cow","Horse","Pig","Bear","Shark","Dolphin","Rabbit","Spider","Butterfly","Eagle","Owl","Turtle","Gorilla","Crab","Octopus","Mouse","Squirrel","Duck","Bee","Zebra","Alligator","Flamingo","Bat","Deer","Goat","Sloth","Wolf","Camel","Skunk"]},
- {id:'actions',name:'Actions',icon:'🤸',words:["Brushing Teeth","Sleeping","Dancing","Driving a Car","Cooking","Sneezing","Laughing","Crying","Texting","Taking a Selfie","Riding a Horse","Climbing a Ladder","Flying a Kite","Playing Video Games","Shaving","Doing Laundry","Walking a Dog","Changing a Diaper","Blowing Out Candles","Mowing the Lawn","Shoveling Snow","Washing Dishes","Taking a Shower","Juggling","Hula Hooping","Building a Snowman","Milking a Cow","Painting a Wall","Reading a Book","Typing","Yawning","Hiccups","Sunbathing","Opening a Present","Making a Sandwich","Flossing","Vacuuming","Tying Shoes","Riding a Roller Coaster","Walking a Tightrope","Eating Spaghetti","Putting on Makeup","Getting a Haircut","Singing in the Shower","Waking Up Late","Stuck in Traffic","Slipping on a Banana Peel","Proposing Marriage","Karaoke","Arm Wrestling","Sleepwalking","Waiting in Line","Burning Your Tongue","Walking on Hot Sand"]},
- {id:'sports',name:'Sports',icon:'🏀',words:["Basketball","Football","Baseball","Soccer","Golf","Tennis","Swimming","Boxing","Bowling","Hockey","Volleyball","Skiing","Surfing","Skateboarding","Wrestling","Gymnastics","Cheerleading","Fishing","Archery","Karate","Running","Cycling","Ping Pong","Figure Skating","Rock Climbing","Weightlifting","Jump Rope","Dodgeball","Fencing","Snowboarding","Horseback Riding","Diving","Rowing","Frisbee","Yoga","Pool","Race Car Driving","Bull Riding","Sumo Wrestling"]},
- {id:'jobs',name:'Jobs',icon:'👷',words:["Doctor","Teacher","Firefighter","Police Officer","Chef","Pilot","Farmer","Dentist","Nurse","Mail Carrier","Lifeguard","Astronaut","Hairdresser","Construction Worker","Waiter","Lawyer","Judge","Painter","Mechanic","Photographer","DJ","Magician","Clown","Rock Star","Cowboy","Ballerina","Taxi Driver","Soldier","Plumber","Surgeon","Librarian","Cashier","Referee","Bartender","Truck Driver","Scientist","Veterinarian","Carpenter","Garbage Collector","Flight Attendant","Lumberjack","Barber","Fisherman","Pizza Delivery Driver","Weather Forecaster","News Anchor","Dog Walker","Secret Agent","Detective","Babysitter","Janitor","Electrician","Zookeeper","Tattoo Artist","Movie Director","Bus Driver"]},
- {id:'movies',name:'Movies',icon:'🎬',words:["Titanic","Jaws","Star Wars","Harry Potter","Frozen","The Lion King","Finding Nemo","Toy Story","Jurassic Park","Shrek","Home Alone","The Wizard of Oz","Rocky","Ghostbusters","Forrest Gump","Back to the Future","E.T.","Indiana Jones","Pirates of the Caribbean","The Matrix","Top Gun","Avatar","Cinderella","Snow White","Beauty and the Beast","Aladdin","The Little Mermaid","Moana","Cars","The Incredibles","Despicable Me","Grease","Mean Girls","The Godfather","King Kong","Godzilla","Twilight","The Hunger Games","Transformers","Elf","Barbie","Men in Black","Mission: Impossible","The Karate Kid","Dirty Dancing","The Terminator","Jumanji","Scream","Up","Inside Out","Encanto","Coco","Fast & Furious","Psycho","WALL-E","Monsters, Inc."]},
- {id:'tv',name:'TV Shows',icon:'📺',words:["Friends","The Simpsons","SpongeBob SquarePants","The Office","Game of Thrones","Stranger Things","Breaking Bad","Baywatch","Survivor","American Idol","Jeopardy!","Wheel of Fortune","The Price Is Right","Sesame Street","Scooby-Doo","Tom and Jerry","Looney Tunes","Seinfeld","Family Guy","South Park","The Bachelor","Grey's Anatomy","Law & Order","CSI","The Walking Dead","Dancing with the Stars","Shark Tank","Saturday Night Live","The Big Bang Theory","Squid Game","Bluey","Paw Patrol","Dora the Explorer","Power Rangers","Pokémon","Star Trek","I Love Lucy","The Brady Bunch","Full House","Cheers","The Sopranos","Teletubbies","Barney & Friends","The Masked Singer","Deal or No Deal","Fear Factor","The Flintstones","Mister Rogers' Neighborhood","The Fresh Prince of Bel-Air","Modern Family","Lost","Keeping Up with the Kardashians","The Voice","America's Got Talent","Judge Judy","The Golden Girls"]},
- {id:'people',name:'Famous People',icon:'⭐',words:["Michael Jackson","Elvis Presley","Taylor Swift","Beyoncé","Oprah Winfrey","Barack Obama","Donald Trump","Abraham Lincoln","George Washington","Albert Einstein","Michael Jordan","LeBron James","Tom Cruise","The Rock (Dwayne Johnson)","Arnold Schwarzenegger","Marilyn Monroe","Charlie Chaplin","Snoop Dogg","Eminem","Lady Gaga","Madonna","Britney Spears","Justin Bieber","Kim Kardashian","Elon Musk","Bill Gates","Steve Jobs","Serena Williams","Tiger Woods","Tom Brady","Shaquille O'Neal","Muhammad Ali","Bruce Lee","Jackie Chan","Mike Tyson","Gordon Ramsay","Jim Carrey","Will Smith","Jennifer Lopez","Rihanna","Stephen Curry","Simone Biles","Usain Bolt","Bob Ross","Dolly Parton","Prince","Whitney Houston","Bob Marley","Shakira","Martin Luther King Jr.","Benjamin Franklin","Neil Armstrong","Mister Rogers","Steve Irwin","Betty White","Leonardo DiCaprio","Adele","Drake","Ellen DeGeneres"]},
- {id:'food',name:'Food & Drink',icon:'🍕',words:["Pizza","Hamburger","Hot Dog","Spaghetti","Taco","Ice Cream Cone","Popcorn","Banana","Watermelon","Corn on the Cob","Pancakes","Coffee","Milkshake","Sushi","Lobster","Donut","Peanut Butter and Jelly","French Fries","Cotton Candy","Apple","Hot Soup","Fried Chicken","Chocolate Bar","Cereal","Bubble Gum","Lollipop","Pretzel","Orange","Grapes","Scrambled Eggs","Bacon","Cupcake","Burrito","Cheese","Lemon","Hot Wings","Pickle","Soda","Birthday Cake","Mac and Cheese","Nachos","Steak","S'mores","Salad","Jell-O","Apple Pie","Toast","Ramen Noodles","Garlic Bread","Coconut","Pineapple","Chips and Salsa","Oatmeal","Popsicle","Hot Chocolate","Beer","Wine","Lemonade"]},
- {id:'house',name:'Around the House',icon:'🏠',words:["Toothbrush","Vacuum Cleaner","Remote Control","Umbrella","Scissors","Hammer","Lawn Mower","Refrigerator","Microwave","Washing Machine","Blender","Toilet","Shower","Mirror","Pillow","Ladder","Flashlight","Broom","Iron","Hair Dryer","Alarm Clock","Couch","Telephone","Camera","Guitar","Piano","Drums","Bicycle","Rocking Chair","Ceiling Fan","Candle","Key","Stapler","Trash Can","Rubber Duck","Toaster","Bathtub","Clock","Book","Laptop","Headphones","Sunglasses","Backpack","Frying Pan","Garden Hose","Doorbell","Light Switch","Bed","Window","Stairs","Dishwasher","Coffee Maker","Treadmill","Television","Lamp","Blanket","Plunger","Mop","Screwdriver","Tape Measure"]},
- {id:'vehicles',name:'Cars & Vehicles',icon:'🚗',words:["Ferrari","Jeep","Tesla","Mustang","Hummer","Mini Cooper","Pickup Truck","Limousine","Police Car","Ambulance","Fire Truck","School Bus","Taxi","Race Car","Monster Truck","Ice Cream Truck","Convertible","Minivan","Motorcycle","Golf Cart","Tractor","Garbage Truck","Semi Truck","Lamborghini","Corvette","VW Beetle","Rolls-Royce","Dump Truck","Tank","RV Camper","Bulldozer","Smart Car","Tow Truck","UPS Truck","Airplane","Helicopter","Train","Submarine","Hot Air Balloon","Rocket Ship","Sailboat","Jet Ski","Scooter","Unicycle","Horse and Buggy","Cruise Ship","Subway Train","Snowmobile","Forklift"]},
- {id:'places',name:'Countries & Places',icon:'🌎',words:["United States","Mexico","Canada","China","Japan","Italy","France","England","Germany","Spain","Australia","Brazil","India","Egypt","Russia","Ireland","Greece","Jamaica","Scotland","Switzerland","Holland","Hawaii","Texas","New York City","Las Vegas","Hollywood","Disney World","Paris","Alaska","Florida","California","The North Pole","The Beach","The Jungle","The Desert","Antarctica","The Moon","Niagara Falls","Grand Canyon","Mount Everest","The White House","Statue of Liberty","Eiffel Tower","Great Wall of China","The Pyramids","Africa","Hospital","School","Gym","Church","Airport","Zoo","Library","Movie Theater","Casino","Jail","Haunted House","Farm"]},
- {id:'holidays',name:'Holidays & Occasions',icon:'🎉',words:["Christmas","Halloween","Thanksgiving","Fourth of July","Valentine's Day","Easter","New Year's Eve","Birthday Party","Wedding","St. Patrick's Day","Super Bowl Sunday","Mother's Day","Father's Day","Graduation","Prom","Baby Shower","Black Friday","First Day of School","Summer Vacation","Trick-or-Treating","Fireworks","Snow Day","Family Reunion","Spring Break","Cinco de Mayo","Hanukkah","Honeymoon","Retirement Party","Tax Day","Groundhog Day","April Fools' Day","Backyard BBQ","Road Trip","Camping Trip","Sleepover","Movie Night","Game Night","Tailgate Party","Pool Party","Job Interview","First Date","Dentist Appointment","Jury Duty"]},
- {id:'heroes',name:'Superheroes & Villains',icon:'🦸',words:["Superman","Batman","Spider-Man","Wonder Woman","The Hulk","Iron Man","Captain America","Thor","Wolverine","The Flash","Aquaman","Black Panther","Catwoman","The Joker","Darth Vader","Yoda","Thanos","Deadpool","Robin","Groot","Black Widow","Ant-Man","Doctor Strange","Captain Marvel","Harley Quinn","Venom","Mr. Incredible","Elastigirl","Teenage Mutant Ninja Turtles","The Powerpuff Girls","Green Lantern","Hawkeye","Loki","Magneto"]},
- {id:'characters',name:'Cartoons & Characters',icon:'🧙',words:["Mickey Mouse","Minnie Mouse","Donald Duck","Goofy","Bugs Bunny","Homer Simpson","Bart Simpson","Patrick Star","Elsa","Olaf","Buzz Lightyear","Woody","Mario","Sonic the Hedgehog","Pikachu","Santa Claus","The Easter Bunny","The Tooth Fairy","Winnie the Pooh","Pinocchio","Peter Pan","Tinker Bell","Tarzan","Dracula","Frankenstein","Zombie","Mummy","Ghost","Witch","Pirate","Ninja","Mermaid","Robot","Alien","Werewolf","The Grinch","Elmo","Big Bird","Cookie Monster","Kermit the Frog","Miss Piggy","Garfield","Snoopy","Charlie Brown","Popeye","Hello Kitty","Stitch","Minions","Pac-Man","Tweety Bird","Wile E. Coyote","James Bond","Sherlock Holmes","Robin Hood","Ronald McDonald","Jack Sparrow","Captain Hook","Cupid","Leprechaun","Genie","Freddy Krueger"]},
- {id:'brands',name:'Brands & Logos',icon:'🏷️',words:["McDonald's","Nike","Apple","Coca-Cola","Starbucks","Amazon","Walmart","Google","Netflix","Disney","Target","Pepsi","KFC","Taco Bell","Burger King","Subway","Dunkin'","Oreo","Lego","Nintendo","PlayStation","Xbox","YouTube","Facebook","Instagram","TikTok","Uber","FedEx","UPS","Home Depot","IKEA","Costco","Doritos","Pringles","M&M's","Band-Aid","Kleenex","Ford","Harley-Davidson","Domino's","Wendy's","Chick-fil-A","Gatorade","Red Bull","Crocs","Microsoft","Snapchat","Spotify","Lay's","Nerf","Hot Wheels","Play-Doh","Zoom","Hershey's","Cheerios","Kool-Aid","Gucci","Old Spice"]}
+ {id:'animals',name:'Animals',words:["Dog","Cat","Elephant","Lion","Monkey","Snake","Kangaroo","Penguin","Giraffe","Frog","Chicken","Cow","Horse","Pig","Bear","Shark","Dolphin","Rabbit","Spider","Butterfly","Eagle","Owl","Turtle","Gorilla","Crab","Octopus","Mouse","Squirrel","Duck","Bee","Zebra","Alligator","Flamingo","Bat","Deer","Goat","Sloth","Wolf","Camel","Skunk"]},
+ {id:'actions',name:'Actions',words:["Brushing Teeth","Sleeping","Dancing","Driving a Car","Cooking","Sneezing","Laughing","Crying","Texting","Taking a Selfie","Riding a Horse","Climbing a Ladder","Flying a Kite","Playing Video Games","Shaving","Doing Laundry","Walking a Dog","Changing a Diaper","Blowing Out Candles","Mowing the Lawn","Shoveling Snow","Washing Dishes","Taking a Shower","Juggling","Hula Hooping","Building a Snowman","Milking a Cow","Painting a Wall","Reading a Book","Typing","Yawning","Hiccups","Sunbathing","Opening a Present","Making a Sandwich","Flossing","Vacuuming","Tying Shoes","Riding a Roller Coaster","Walking a Tightrope","Eating Spaghetti","Putting on Makeup","Getting a Haircut","Singing in the Shower","Waking Up Late","Stuck in Traffic","Slipping on a Banana Peel","Proposing Marriage","Karaoke","Arm Wrestling","Sleepwalking","Waiting in Line","Burning Your Tongue","Walking on Hot Sand"]},
+ {id:'sports',name:'Sports',words:["Basketball","Football","Baseball","Soccer","Golf","Tennis","Swimming","Boxing","Bowling","Hockey","Volleyball","Skiing","Surfing","Skateboarding","Wrestling","Gymnastics","Cheerleading","Fishing","Archery","Karate","Running","Cycling","Ping Pong","Figure Skating","Rock Climbing","Weightlifting","Jump Rope","Dodgeball","Fencing","Snowboarding","Horseback Riding","Diving","Rowing","Frisbee","Yoga","Pool","Race Car Driving","Bull Riding","Sumo Wrestling"]},
+ {id:'jobs',name:'Jobs',words:["Doctor","Teacher","Firefighter","Police Officer","Chef","Pilot","Farmer","Dentist","Nurse","Mail Carrier","Lifeguard","Astronaut","Hairdresser","Construction Worker","Waiter","Lawyer","Judge","Painter","Mechanic","Photographer","DJ","Magician","Clown","Rock Star","Cowboy","Ballerina","Taxi Driver","Soldier","Plumber","Surgeon","Librarian","Cashier","Referee","Bartender","Truck Driver","Scientist","Veterinarian","Carpenter","Garbage Collector","Flight Attendant","Lumberjack","Barber","Fisherman","Pizza Delivery Driver","Weather Forecaster","News Anchor","Dog Walker","Secret Agent","Detective","Babysitter","Janitor","Electrician","Zookeeper","Tattoo Artist","Movie Director","Bus Driver"]},
+ {id:'movies',name:'Movies',words:["Titanic","Jaws","Star Wars","Harry Potter","Frozen","The Lion King","Finding Nemo","Toy Story","Jurassic Park","Shrek","Home Alone","The Wizard of Oz","Rocky","Ghostbusters","Forrest Gump","Back to the Future","E.T.","Indiana Jones","Pirates of the Caribbean","The Matrix","Top Gun","Avatar","Cinderella","Snow White","Beauty and the Beast","Aladdin","The Little Mermaid","Moana","Cars","The Incredibles","Despicable Me","Grease","Mean Girls","The Godfather","King Kong","Godzilla","Twilight","The Hunger Games","Transformers","Elf","Barbie","Men in Black","Mission: Impossible","The Karate Kid","Dirty Dancing","The Terminator","Jumanji","Scream","Up","Inside Out","Encanto","Coco","Fast & Furious","Psycho","WALL-E","Monsters, Inc."]},
+ {id:'tv',name:'TV Shows',words:["Friends","The Simpsons","SpongeBob SquarePants","The Office","Game of Thrones","Stranger Things","Breaking Bad","Baywatch","Survivor","American Idol","Jeopardy!","Wheel of Fortune","The Price Is Right","Sesame Street","Scooby-Doo","Tom and Jerry","Looney Tunes","Seinfeld","Family Guy","South Park","The Bachelor","Grey's Anatomy","Law & Order","CSI","The Walking Dead","Dancing with the Stars","Shark Tank","Saturday Night Live","The Big Bang Theory","Squid Game","Bluey","Paw Patrol","Dora the Explorer","Power Rangers","Pokémon","Star Trek","I Love Lucy","The Brady Bunch","Full House","Cheers","The Sopranos","Teletubbies","Barney & Friends","The Masked Singer","Deal or No Deal","Fear Factor","The Flintstones","Mister Rogers' Neighborhood","The Fresh Prince of Bel-Air","Modern Family","Lost","Keeping Up with the Kardashians","The Voice","America's Got Talent","Judge Judy","The Golden Girls"]},
+ {id:'people',name:'Famous People',words:["Michael Jackson","Elvis Presley","Taylor Swift","Beyoncé","Oprah Winfrey","Barack Obama","Donald Trump","Abraham Lincoln","George Washington","Albert Einstein","Michael Jordan","LeBron James","Tom Cruise","The Rock (Dwayne Johnson)","Arnold Schwarzenegger","Marilyn Monroe","Charlie Chaplin","Snoop Dogg","Eminem","Lady Gaga","Madonna","Britney Spears","Justin Bieber","Kim Kardashian","Elon Musk","Bill Gates","Steve Jobs","Serena Williams","Tiger Woods","Tom Brady","Shaquille O'Neal","Muhammad Ali","Bruce Lee","Jackie Chan","Mike Tyson","Gordon Ramsay","Jim Carrey","Will Smith","Jennifer Lopez","Rihanna","Stephen Curry","Simone Biles","Usain Bolt","Bob Ross","Dolly Parton","Prince","Whitney Houston","Bob Marley","Shakira","Martin Luther King Jr.","Benjamin Franklin","Neil Armstrong","Mister Rogers","Steve Irwin","Betty White","Leonardo DiCaprio","Adele","Drake","Ellen DeGeneres"]},
+ {id:'food',name:'Food & Drink',words:["Pizza","Hamburger","Hot Dog","Spaghetti","Taco","Ice Cream Cone","Popcorn","Banana","Watermelon","Corn on the Cob","Pancakes","Coffee","Milkshake","Sushi","Lobster","Donut","Peanut Butter and Jelly","French Fries","Cotton Candy","Apple","Hot Soup","Fried Chicken","Chocolate Bar","Cereal","Bubble Gum","Lollipop","Pretzel","Orange","Grapes","Scrambled Eggs","Bacon","Cupcake","Burrito","Cheese","Lemon","Hot Wings","Pickle","Soda","Birthday Cake","Mac and Cheese","Nachos","Steak","S'mores","Salad","Jell-O","Apple Pie","Toast","Ramen Noodles","Garlic Bread","Coconut","Pineapple","Chips and Salsa","Oatmeal","Popsicle","Hot Chocolate","Beer","Wine","Lemonade"]},
+ {id:'house',name:'Household',words:["Toothbrush","Vacuum Cleaner","Remote Control","Umbrella","Scissors","Hammer","Lawn Mower","Refrigerator","Microwave","Washing Machine","Blender","Toilet","Shower","Mirror","Pillow","Ladder","Flashlight","Broom","Iron","Hair Dryer","Alarm Clock","Couch","Telephone","Camera","Guitar","Piano","Drums","Bicycle","Rocking Chair","Ceiling Fan","Candle","Key","Stapler","Trash Can","Rubber Duck","Toaster","Bathtub","Clock","Book","Laptop","Headphones","Sunglasses","Backpack","Frying Pan","Garden Hose","Doorbell","Light Switch","Bed","Window","Stairs","Dishwasher","Coffee Maker","Treadmill","Television","Lamp","Blanket","Plunger","Mop","Screwdriver","Tape Measure"]},
+ {id:'vehicles',name:'Vehicles',words:["Ferrari","Jeep","Tesla","Mustang","Hummer","Mini Cooper","Pickup Truck","Limousine","Police Car","Ambulance","Fire Truck","School Bus","Taxi","Race Car","Monster Truck","Ice Cream Truck","Convertible","Minivan","Motorcycle","Golf Cart","Tractor","Garbage Truck","Semi Truck","Lamborghini","Corvette","VW Beetle","Rolls-Royce","Dump Truck","Tank","RV Camper","Bulldozer","Smart Car","Tow Truck","UPS Truck","Airplane","Helicopter","Train","Submarine","Hot Air Balloon","Rocket Ship","Sailboat","Jet Ski","Scooter","Unicycle","Horse and Buggy","Cruise Ship","Subway Train","Snowmobile","Forklift"]},
+ {id:'places',name:'Places',words:["United States","Mexico","Canada","China","Japan","Italy","France","England","Germany","Spain","Australia","Brazil","India","Egypt","Russia","Ireland","Greece","Jamaica","Scotland","Switzerland","Holland","Hawaii","Texas","New York City","Las Vegas","Hollywood","Disney World","Paris","Alaska","Florida","California","The North Pole","The Beach","The Jungle","The Desert","Antarctica","The Moon","Niagara Falls","Grand Canyon","Mount Everest","The White House","Statue of Liberty","Eiffel Tower","Great Wall of China","The Pyramids","Africa","Hospital","School","Gym","Church","Airport","Zoo","Library","Movie Theater","Casino","Jail","Haunted House","Farm"]},
+ {id:'holidays',name:'Holidays',words:["Christmas","Halloween","Thanksgiving","Fourth of July","Valentine's Day","Easter","New Year's Eve","Birthday Party","Wedding","St. Patrick's Day","Super Bowl Sunday","Mother's Day","Father's Day","Graduation","Prom","Baby Shower","Black Friday","First Day of School","Summer Vacation","Trick-or-Treating","Fireworks","Snow Day","Family Reunion","Spring Break","Cinco de Mayo","Hanukkah","Honeymoon","Retirement Party","Tax Day","Groundhog Day","April Fools' Day","Backyard BBQ","Road Trip","Camping Trip","Sleepover","Movie Night","Game Night","Tailgate Party","Pool Party","Job Interview","First Date","Dentist Appointment","Jury Duty"]},
+ {id:'heroes',name:'Heroes & Villains',words:["Superman","Batman","Spider-Man","Wonder Woman","The Hulk","Iron Man","Captain America","Thor","Wolverine","The Flash","Aquaman","Black Panther","Catwoman","The Joker","Darth Vader","Yoda","Thanos","Deadpool","Robin","Groot","Black Widow","Ant-Man","Doctor Strange","Captain Marvel","Harley Quinn","Venom","Mr. Incredible","Elastigirl","Teenage Mutant Ninja Turtles","The Powerpuff Girls","Green Lantern","Hawkeye","Loki","Magneto"]},
+ {id:'characters',name:'Characters',words:["Mickey Mouse","Minnie Mouse","Donald Duck","Goofy","Bugs Bunny","Homer Simpson","Bart Simpson","Patrick Star","Elsa","Olaf","Buzz Lightyear","Woody","Mario","Sonic the Hedgehog","Pikachu","Santa Claus","The Easter Bunny","The Tooth Fairy","Winnie the Pooh","Pinocchio","Peter Pan","Tinker Bell","Tarzan","Dracula","Frankenstein","Zombie","Mummy","Ghost","Witch","Pirate","Ninja","Mermaid","Robot","Alien","Werewolf","The Grinch","Elmo","Big Bird","Cookie Monster","Kermit the Frog","Miss Piggy","Garfield","Snoopy","Charlie Brown","Popeye","Hello Kitty","Stitch","Minions","Pac-Man","Tweety Bird","Wile E. Coyote","James Bond","Sherlock Holmes","Robin Hood","Ronald McDonald","Jack Sparrow","Captain Hook","Cupid","Leprechaun","Genie","Freddy Krueger"]},
+ {id:'brands',name:'Brands',words:["McDonald's","Nike","Apple","Coca-Cola","Starbucks","Amazon","Walmart","Google","Netflix","Disney","Target","Pepsi","KFC","Taco Bell","Burger King","Subway","Dunkin'","Oreo","Lego","Nintendo","PlayStation","Xbox","YouTube","Facebook","Instagram","TikTok","Uber","FedEx","UPS","Home Depot","IKEA","Costco","Doritos","Pringles","M&M's","Band-Aid","Kleenex","Ford","Harley-Davidson","Domino's","Wendy's","Chick-fil-A","Gatorade","Red Bull","Crocs","Microsoft","Snapchat","Spotify","Lay's","Nerf","Hot Wheels","Play-Doh","Zoom","Hershey's","Cheerios","Kool-Aid","Gucci","Old Spice"]}
 ];
+
+/* Category colors and monoline icons (24x24, drawn in white on the colored badge). */
+var ART={
+ animals:{c:'#C8702E',s:'<ellipse cx="12" cy="15.5" rx="3.8" ry="3.1" fill="currentColor" stroke="none"/><circle cx="6.8" cy="10" r="1.9" fill="currentColor" stroke="none"/><circle cx="10.2" cy="6.8" r="1.9" fill="currentColor" stroke="none"/><circle cx="13.8" cy="6.8" r="1.9" fill="currentColor" stroke="none"/><circle cx="17.2" cy="10" r="1.9" fill="currentColor" stroke="none"/>'},
+ actions:{c:'#1FA38A',s:'<circle cx="12" cy="4.2" r="2" fill="currentColor" stroke="none"/><path d="M12 7.5v5.5M12 13l-4 6.5M12 13l4 6.5M12 9l-5-3M12 9l5-3"/>'},
+ sports:{c:'#E38B12',s:'<circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17M3.5 12h17M6.3 6c3 3 3 9 0 12M17.7 6c-3 3-3 9 0 12"/>'},
+ jobs:{c:'#6B5B4E',s:'<rect x="3" y="7.5" width="18" height="12.5" rx="2"/><path d="M9 7.5V5.5a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 5.5v2M3 12.5h18"/>'},
+ movies:{c:'#B5306F',s:'<rect x="3" y="9.5" width="18" height="11.5" rx="2"/><path d="M3.5 9.5l1.8-5 15.7 3-1 2M8.5 5.2l2 3.8M13.3 6.1l2 3.8"/>'},
+ tv:{c:'#3B7DD8',s:'<rect x="3" y="7.5" width="18" height="12" rx="2"/><path d="M8 3l4 4 4-4M9 22.5h6"/>'},
+ people:{c:'#D4A017',s:'<path d="M12 2.8l2.7 5.7 6.2.8-4.5 4.3 1.1 6.2L12 16.8l-5.5 2.9 1.1-6.2L3.1 9.3l6.2-.8z" fill="currentColor" stroke="none"/>'},
+ food:{c:'#E04848',s:'<path d="M12 21.5L3.2 6.2c5.4-3.3 12.2-3.3 17.6 0z"/><path d="M5 9.3c4.3-2.4 9.7-2.4 14 0"/><circle cx="10" cy="11.5" r="1.3" fill="currentColor" stroke="none"/><circle cx="14" cy="13.8" r="1.3" fill="currentColor" stroke="none"/><circle cx="11.6" cy="16.6" r="1.3" fill="currentColor" stroke="none"/>'},
+ house:{c:'#6D8B3A',s:'<path d="M3 11.5l9-7.5 9 7.5"/><path d="M5.5 10v10.5h13V10"/><path d="M10 20.5v-6h4v6"/>'},
+ vehicles:{c:'#2E9E6E',s:'<path d="M3 16.5v-3.5l2.3-5.3A1.5 1.5 0 0 1 6.7 6.8h10.6a1.5 1.5 0 0 1 1.4.9L21 13v3.5z"/><path d="M3 13h18"/><circle cx="7.5" cy="17" r="2" fill="currentColor" stroke="none"/><circle cx="16.5" cy="17" r="2" fill="currentColor" stroke="none"/>'},
+ places:{c:'#1A9BB0',s:'<circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="3.8" ry="9"/><path d="M3 12h18M4.3 7.5h15.4M4.3 16.5h15.4"/>'},
+ holidays:{c:'#E0609A',s:'<rect x="3" y="9" width="18" height="12" rx="1.5"/><path d="M12 9v12M3 14h18"/><path d="M12 9C10.5 6 7 4.5 6.5 6.5S10 9 12 9c1.5-3 5-4.5 5.5-2.5S14 9 12 9"/>'},
+ heroes:{c:'#2C3E9E',s:'<path d="M13 2.5L4.5 14h6.5l-1 7.5L19.5 10H13z" fill="currentColor" stroke="none"/>'},
+ characters:{c:'#8E44AD',s:'<path d="M5 21V11a7 7 0 0 1 14 0v10l-2.3-2-2.35 2-2.35-2-2.35 2L7.3 19z"/><circle cx="9.6" cy="11" r="1.2" fill="currentColor" stroke="none"/><circle cx="14.4" cy="11" r="1.2" fill="currentColor" stroke="none"/>'},
+ brands:{c:'#3C4858',s:'<path d="M3 11.5V4h7.5l10 10-7.5 7.5z"/><circle cx="7.6" cy="8.6" r="1.5" fill="currentColor" stroke="none"/>'}
+};
+var SVG_OPEN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">';
+function icon(id){ var a=ART[id]; return a ? SVG_OPEN+a.s+'</svg>' : ''; }
+var TICK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg>';
 
 var TEAM_COLORS=['#E64B57','#2F7BE8','#15A072','#F5B82E'];
 var TEAM_DEFAULTS=['Red Team','Blue Team','Green Team','Gold Team'];
@@ -323,7 +383,7 @@ function $(id){return document.getElementById(id);}
 
 var state={
   picked:new Set(CATEGORIES.map(function(c){return c.id;})),
-  seconds:60, teamCount:2, teamNames:['','','',''], mute:false,
+  seconds:60, teamCount:2, teamNames:['','','',''], mute:false, tilt:true,
   phase:'setup', scores:[], turn:0, deck:[], round:null
 };
 
@@ -331,7 +391,7 @@ var state={
 function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
 function buildDeck(){
   var pool=[];
-  CATEGORIES.forEach(function(c){ if(!state.picked.has(c.id)) return; c.words.forEach(function(w){ pool.push({w:w,c:c.name}); }); });
+  CATEGORIES.forEach(function(c){ if(!state.picked.has(c.id)) return; c.words.forEach(function(w){ pool.push({w:w,c:c.name,id:c.id}); }); });
   return shuffle(pool);
 }
 function draw(){
@@ -356,11 +416,13 @@ function el(tag,cls,text){var e=document.createElement(tag);if(cls)e.className=c
 function renderCategories(){
   var g=$('cat-grid'); g.innerHTML='';
   CATEGORIES.forEach(function(c){
-    var b=el('button','cat'); b.type='button'; b.id='cat-'+c.id;
+    var art=ART[c.id]||{c:'#888',s:''};
+    var b=el('button','cat'); b.type='button'; b.id='cat-'+c.id; b.style.setProperty('--c',art.c);
     b.setAttribute('aria-pressed', String(state.picked.has(c.id)));
-    var ic=el('span','ic',c.icon); ic.setAttribute('aria-hidden','true');
+    var bw=el('span','badge-wrap'); var badge=el('span','badge'); badge.innerHTML=icon(c.id); var tick=el('span','tick'); tick.innerHTML=TICK;
+    bw.appendChild(badge); bw.appendChild(tick);
     var tx=el('span','tx'); tx.appendChild(el('span','nm',c.name)); tx.appendChild(el('span','ct',c.words.length+' words'));
-    b.appendChild(ic); b.appendChild(tx);
+    b.appendChild(bw); b.appendChild(tx);
     b.addEventListener('click',function(){
       if(state.picked.has(c.id)) state.picked.delete(c.id); else state.picked.add(c.id);
       b.setAttribute('aria-pressed', String(state.picked.has(c.id)));
@@ -401,6 +463,13 @@ function syncMute(){
   var b=$('btn-mute'); b.textContent=state.mute?'Sound off':'Sound on'; b.setAttribute('aria-pressed',String(state.mute));
 }
 
+function syncTilt(){
+  var sup=tiltSupported(), on=state.tilt&&sup;
+  $('opt-tilt').checked=state.tilt;
+  var chip=$('btn-tilt'); chip.hidden=!sup; chip.textContent=state.tilt?'Tilt on':'Tilt off'; chip.setAttribute('aria-pressed',String(!state.tilt));
+  var h=$('tilt-hint'); if(!tilt.blocked) h.textContent=TILT_HINT; h.hidden=!on; $('handoff-tip').hidden=!on;
+}
+
 /* ---------- audio, haptics, wake lock ---------- */
 var actx=null;
 function unlockAudio(){ try{ var AC=window.AudioContext||window.webkitAudioContext; if(!AC) return; actx=actx||new AC(); if(actx.state==='suspended') actx.resume(); }catch(e){} }
@@ -421,6 +490,38 @@ function buzz(p){ try{ if(navigator.vibrate) navigator.vibrate(p); }catch(e){} }
 var lock=null;
 function keepAwake(){ try{ if(navigator.wakeLock&&navigator.wakeLock.request){ navigator.wakeLock.request('screen').then(function(l){lock=l;}).catch(function(){}); } }catch(e){} }
 function releaseAwake(){ try{ if(lock) lock.release(); }catch(e){} lock=null; }
+
+/* ---------- tilt controls + feedback flash ---------- */
+/* beta is the front-back tilt: 0 = flat face-up, 90 = upright, 180 = flat face-down. */
+var tilt={armed:false,lastAt:0,listening:false,blocked:false};
+var TILT_HINT='Tilt down = Got it \u00a0\u00b7\u00a0 Tilt up = Skip';
+function tiltBlocked(){ tilt.blocked=true; var h=$('tilt-hint'); h.textContent='Tilt is blocked on this phone. Use the buttons.'; h.hidden=false; }
+function tiltSupported(){ return ('DeviceOrientationEvent' in window) && navigator.maxTouchPoints>0; }
+function enableTilt(){
+  if(!state.tilt||!tiltSupported()) return;
+  tilt.armed=false;
+  try{
+    if(typeof DeviceOrientationEvent.requestPermission==='function'){
+      DeviceOrientationEvent.requestPermission().then(function(r){ if(r==='granted'){ tilt.blocked=false; listenTilt(); } else tiltBlocked(); }).catch(tiltBlocked);
+    } else { listenTilt(); }
+  }catch(e){}
+}
+function listenTilt(){ if(tilt.listening) return; tilt.listening=true; window.addEventListener('deviceorientation',onTilt); }
+function onTilt(e){
+  if(state.phase!=='play'||!state.tilt||e.beta==null) return;
+  if(window.innerWidth>window.innerHeight) return;
+  var b=Math.abs(e.beta), now=Date.now();
+  if(b>45&&b<135){ tilt.armed=true; return; }
+  if(!tilt.armed||now-tilt.lastAt<900) return;
+  if(b>=155){ tilt.armed=false; tilt.lastAt=now; mark(true); }
+  else if(b<=20){ tilt.armed=false; tilt.lastAt=now; mark(false); }
+}
+var flashTimer=null;
+function flash(got){
+  var f=$('flash'); $('flash-text').textContent=got?'GOT IT!':'SKIP';
+  f.className='flash show '+(got?'got':'skip');
+  clearTimeout(flashTimer); flashTimer=setTimeout(function(){ f.className='flash'; },600);
+}
 
 /* ---------- game flow ---------- */
 function startGame(){
@@ -446,6 +547,7 @@ function showHandoff(){
 }
 function startRound(){
   unlockAudio();
+  enableTilt();
   var t=state.turn%state.teamCount;
   var total=state.seconds*1000;
   state.round={team:t, words:[], pts:0, total:total, endAt:Date.now()+total, lastSec:null, current:null, timer:null};
@@ -462,7 +564,10 @@ function startRound(){
 }
 function nextWord(){
   var d=draw(); state.round.current=d;
-  $('play-cat').textContent=d.c;
+  var art=ART[d.id]||{c:'#888'};
+  $('play-cat').style.setProperty('--c',art.c);
+  $('play-cat-icon').innerHTML=icon(d.id);
+  $('play-cat-name').textContent=d.c;
   $('play-word').textContent=d.w;
 }
 function mark(got){
@@ -471,6 +576,7 @@ function mark(got){
   state.round.words.push({w:cur.w,c:cur.c,got:got});
   if(got){ state.round.pts++; $('play-score').textContent=state.round.pts+(state.round.pts===1?' pt':' pts'); chime(); buzz(30); }
   else { thud(); buzz(15); }
+  flash(got);
   nextWord();
 }
 function tick(){
@@ -534,7 +640,7 @@ function newGame(){ state.phase='setup'; state.round=null; show('screen-setup');
 
 /* ---------- persistence ---------- */
 function save(){
-  try{ localStorage.setItem(STORE_KEY, JSON.stringify({picked:Array.from(state.picked),seconds:state.seconds,teamCount:state.teamCount,teamNames:state.teamNames,mute:state.mute})); }catch(e){}
+  try{ localStorage.setItem(STORE_KEY, JSON.stringify({picked:Array.from(state.picked),seconds:state.seconds,teamCount:state.teamCount,teamNames:state.teamNames,mute:state.mute,tilt:state.tilt})); }catch(e){}
 }
 function applySettings(d){
   if(!d) return;
@@ -543,10 +649,11 @@ function applySettings(d){
   if(d.teamCount>=1&&d.teamCount<=4) state.teamCount=d.teamCount;
   if(Array.isArray(d.teamNames)){ state.teamNames=['','','','']; d.teamNames.slice(0,4).forEach(function(s,i){ state.teamNames[i]=String(s||''); }); }
   state.mute=!!d.mute;
+  if(typeof d.tilt==='boolean') state.tilt=d.tilt;
 }
 function load(){ try{ var d=JSON.parse(localStorage.getItem(STORE_KEY)||'null'); applySettings(d); }catch(e){} }
 function snapshot(){
-  return { settings:{picked:Array.from(state.picked),seconds:state.seconds,teamCount:state.teamCount,teamNames:state.teamNames,mute:state.mute},
+  return { settings:{picked:Array.from(state.picked),seconds:state.seconds,teamCount:state.teamCount,teamNames:state.teamNames,mute:state.mute,tilt:state.tilt},
            scores:state.scores.slice(), turn:state.turn, phase:state.phase };
 }
 
@@ -563,6 +670,8 @@ $('btn-got').addEventListener('click',function(){ mark(true); this.blur(); });
 $('btn-skip').addEventListener('click',function(){ mark(false); this.blur(); });
 $('btn-early').addEventListener('click',endRound);
 $('btn-mute').addEventListener('click',function(){ state.mute=!state.mute; syncMute(); save(); if(!state.mute){ unlockAudio(); tickBeep(); } });
+$('opt-tilt').addEventListener('change',function(){ state.tilt=this.checked; syncTilt(); save(); });
+$('btn-tilt').addEventListener('click',function(){ state.tilt=!state.tilt; syncTilt(); save(); if(state.tilt) enableTilt(); });
 $('btn-next').addEventListener('click',nextTurn);
 $('btn-end').addEventListener('click',endGame);
 $('btn-again').addEventListener('click',playAgain);
@@ -580,7 +689,7 @@ document.addEventListener('keydown',function(e){
 function start(data){
   load();
   if(data&&data.settings) applySettings(data.settings);
-  renderCategories(); syncSetup(); syncTime(); renderTeams(); syncMute();
+  renderCategories(); syncSetup(); syncTime(); renderTeams(); syncMute(); syncTilt();
   if(data&&data.phase&&data.phase!=='setup'&&Array.isArray(data.scores)&&data.scores.length===state.teamCount){
     state.scores=data.scores.slice(); state.turn=data.turn||0; state.deck=buildDeck();
     if(data.phase==='final') endGame(); else showHandoff();
