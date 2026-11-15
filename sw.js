@@ -1,5 +1,5 @@
 /* Charades Night offline cache. Bump CACHE when index.html changes. */
-var CACHE = 'charades-night-v1';
+var CACHE = 'charades-night-v2';
 var ASSETS = ['./', './index.html', './manifest.webmanifest', './icon.svg', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', function (e) {
